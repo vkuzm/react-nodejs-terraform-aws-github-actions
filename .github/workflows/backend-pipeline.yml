@@ -2,7 +2,7 @@ name: Pipeline CI/CD for Back-End
 
 env:
   NODE_VERSION: 12
-  WORKING_DIRECTORY: backend
+  WORKING_DIRECTORY: ./backend
   
 on:
   push:
@@ -21,6 +21,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
+          
+      #1 Install dependencies
+      - name: npm install
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm install
           
       #1 Run tests
       - name: run tests
