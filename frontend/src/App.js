@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">Users</header>
+      <header className="header">Users list</header>
 
       <table>
         <thead>
