@@ -18,29 +18,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
           
-      #1 Install dependencies
+      # Change dependencies
+      - name: Cache functions node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ inputs.os }}-${{ hashFiles('package.json') }}
+          
+      # Install dependencies
       - name: npm install
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npm install
           
-      #1 Run tests
+      # Run tests
       - name: run tests
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npm test
       
-      #2 Run ESLint
-      - name: install eslint
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: npm install eslint -D
+      # Run ESLint
       - name: run eslint
-        uses: icrawl/action-eslint@v1 
-        with:
-          reporter: github-pr-review
-          eslint_flags: 'app/'
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npx eslint app/*
           
           
   deploy:
