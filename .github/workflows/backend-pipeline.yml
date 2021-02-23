@@ -45,7 +45,8 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npx eslint app/*
           
-          
+
+
   deploy:
     if: github.event_name != 'pull_request'
     needs: [test]
