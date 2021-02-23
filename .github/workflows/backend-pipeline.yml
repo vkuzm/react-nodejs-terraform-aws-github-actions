@@ -2,6 +2,7 @@ name: Pipeline CI/CD for Back-End
 
 env:
   NODE_VERSION: 12
+  WORKING_DIRECTORY: ${{ $GITHUB_WORKSPACE }}/backend
   
 on:
   push:
@@ -16,9 +17,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - working-directory: ${{ env.WORKING_DIRECTORY }}
       - uses: actions/checkout@v2
-        with:
-         path: backend
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
