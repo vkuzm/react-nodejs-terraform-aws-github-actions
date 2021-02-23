@@ -36,14 +36,22 @@ jobs:
       # Run ESLint
       - name: run eslint
         run: npx eslint app/*
-          
-          
-  deploy:
+                   
+  build:
     if: github.event_name != 'pull_request'
     needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+      - name: Docker Build & Push to container registry
+        run: |
+          docker build . -t mindzoom/users-app:${{ github.sha }}
+          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
+          docker push mindzoom/users-app:${{ github.sha }} 
+          
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'deploy'
+         
