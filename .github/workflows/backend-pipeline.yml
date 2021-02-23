@@ -22,7 +22,7 @@ jobs:
           
       #1 Run tests
       - name: run tests
-      - run: npm test
+        run: npm test
       
       #2 Run ESLint
       - name: run eslint
