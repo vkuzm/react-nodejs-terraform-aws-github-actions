@@ -1,0 +1,68 @@
+.App {
+  max-width: 800px;
+  margin:0 auto;
+}
+
+body {
+  background-color: #282c34;
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-top :50px;
+  margin-bottom: 30px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr {
+  background-color: #5c5c5c;
+}
+
+tr:nth-child(even) {
+  background-color: #4d4d4d;
+}
+
+.delete {
+  font-size: 20px;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.delete:hover {
+  color: red;
+}
+
+.form {
+  margin-top: 50px;
+}
+
+.form input {
+  background-color: #4d4d4d;
+  border: 0;
+  padding: 10px 8px;
+  display: block;
+  width: 300px;
+  margin-bottom: 15px;
+  outline: none !important;
+}
+
+.form button {
+  background-color: #d3d3d3;
+  border: 0;
+  padding: 15px;
+  width: 150px;
+  cursor: pointer;
+}

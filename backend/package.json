@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "pg": "8.5.1"
+  },
+  "scripts": {
+    "dev": "nodemon --legacy-watch app/index.js",
+    "debug": "nodemon --legacy-watch --inspect=0.0.0.0 app/index.js",
+    "start": "node app/index.js",
+    "test": "mocha --reporter=spec --recursive 'test/**/*.spec.js'"
+  },
+  "devDependencies": {
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.14",
+    "nyc": "^15.1.0"
+  }
+}
