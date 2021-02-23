@@ -2,7 +2,7 @@ name: Pipeline CI/CD for Back-End
 
 env:
   NODE_VERSION: 12
-  WORKING_DIRECTORY: ${{ $GITHUB_WORKSPACE }}/backend
+  WORKING_DIRECTORY: /backend
   
 on:
   push:
