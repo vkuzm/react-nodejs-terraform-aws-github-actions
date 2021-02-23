@@ -1,0 +1,49 @@
+name: Pipeline CI/CD for Front-End
+
+env:
+  NODE_VERSION: 12
+  WORKING_DIRECTORY: ./frontend
+  
+on:
+  push:
+    paths:    
+      - 'frontend/**'
+      - '.github/workflows/front-end-pipeline.yml'
+  pull_request:
+    paths:    
+      - 'frontend/**'  
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      # Install dependencies
+      - name: npm install
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm install
+          
+      # Run tests
+      - name: run tests
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npm run test a -- --watchAll=false --coverage
+      
+      # Run ESLint
+      - name: run eslint
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        run: npx eslint .
+          
+          
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
