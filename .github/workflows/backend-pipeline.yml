@@ -41,6 +41,9 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: [test]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     steps:
       - uses: actions/checkout@v2
       - name: Docker Build & Push to container registry
