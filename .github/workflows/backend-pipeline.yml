@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -38,8 +37,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npx eslint app/*
           
-
-
+          
   deploy:
     if: github.event_name != 'pull_request'
     needs: [test]
