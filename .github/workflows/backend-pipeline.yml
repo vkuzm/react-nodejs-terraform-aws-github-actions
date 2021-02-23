@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ inputs.os }}-${{ hashFiles('package.json') }}
+          key: ${{ hashFiles('package.json') }}
           
       # Install dependencies
       - name: npm install
