@@ -49,9 +49,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Docker Build & Push to container registry
         run: |
-          docker build . -t mindzoom/users-app:${{ env.TAG }}
-          docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
-          docker push mindzoom/users-app:${{ env.TAG }} 
+          #docker build . -t mindzoom/users-app:${{ env.TAG }}
+          #docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
+          #docker push mindzoom/users-app:${{ env.TAG }} 
           
   deploy:
     needs: [build]
