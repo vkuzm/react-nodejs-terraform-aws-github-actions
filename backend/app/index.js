@@ -26,8 +26,8 @@ app.get('/users/:userId', async (req, res) => {
 
 // Add a new user
 app.post('/users', (req, res) => {
-  //console.log(req);
-  //console.log(res);
+  console.log(req);
+  console.log(res);
 });
 
 // Delete s single user
