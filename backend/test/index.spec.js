@@ -1,4 +1,4 @@
-  const expect = require('chai').expect;
+const expect = require('chai').expect;
 
 describe('set of unit tests', function () {
     it('unit test 1', function () {

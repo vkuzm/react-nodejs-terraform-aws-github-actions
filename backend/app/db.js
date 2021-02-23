@@ -54,8 +54,8 @@ const populateDatabase = async () => {
     if (totalUsers.rows.length === 0) {
         for (let user of initialUsers) {
             const query = `INSERT INTO users (firstname, lastname, age) VALUES ('${user.firstname}', '${user.lastname}', '${user.age}')`;
-    
-            pgClient.query(query, (err, res) => {
+
+            pgClient.query(query, (err) => {
                 if (err) {
                     console.error(err);
                     return;
@@ -64,12 +64,12 @@ const populateDatabase = async () => {
             });
         }
     }
-}
+};
 
 populateDatabase();
 
 module.exports = {
     query: (text, params, callback) => {
-        return pgClient.query(text, params, callback)
+        return pgClient.query(text, params, callback);
     },
-}
+};

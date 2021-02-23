@@ -26,12 +26,14 @@ app.get('/users/:userId', async (req, res) => {
 
 // Add a new user
 app.post('/users', (req, res) => {
-
+  console.log(req);
+  console.log(res);
 });
 
 // Delete s single user
 app.delete('/users/:userId', (req, res) => {
-
+  console.log(req);
+  console.log(res);
 });
 
 app.listen('8081', () => {
