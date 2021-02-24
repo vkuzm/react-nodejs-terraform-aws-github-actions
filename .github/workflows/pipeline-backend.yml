@@ -52,9 +52,6 @@ jobs:
     name: 'Terraform Plan'
     needs: [test]
     runs-on: ubuntu-latest
-    env:
-      TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-      TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }}
@@ -84,6 +81,9 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -no-color
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       continue-on-error: true
 
     - uses: actions/github-script@0.9.0
@@ -132,9 +132,6 @@ jobs:
     name: 'Terraform Deploy'
     needs: [build-and-push]
     runs-on: ubuntu-latest
-    env:
-      TF_VAR_DOCKER_IMAGE: ${{ IMAGE_NAME }}:${{ IMAGE_TAG }} 
-      TF_VAR_PORT_CONTAINER: ${{ PORT_CONTAINER }}  
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }} 
@@ -163,4 +160,7 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       
