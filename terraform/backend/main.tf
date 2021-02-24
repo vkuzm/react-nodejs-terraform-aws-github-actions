@@ -86,7 +86,7 @@ resource "aws_instance" "backend" {
     instance_type               = var.instance_type
     vpc_security_group_ids      = [aws_security_group.backend.id]
     availability_zone           = data.aws_availability_zones.available.names[0]
-    associate_public_ip_address = false
+    associate_public_ip_address = "false"
     user_data                   = templatefile("deployment.sh.tpl", {
       PORT_EXTERNAL  = "80"
       PORT_CONTAINER = var.PORT_CONTAINER

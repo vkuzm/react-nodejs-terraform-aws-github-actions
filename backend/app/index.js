@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const cors = require('cors');
-const ip = require('ip');
+const ip = require('ec2-publicip');
 const db = require('./db');
 
 const corsOptions = {
@@ -11,6 +11,11 @@ const corsOptions = {
 const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParse.json());
+
+const getServerIp = async () => {
+  const data = await fetch('http://169.254.169.254/latest/meta-data/public-ipv4');
+  return await data.json();
+};
 
 // Home page
 app.get('/', async (req, res) => {
@@ -26,7 +31,7 @@ app.get('/users', async (req, res) => {
 
     res.json({
       users: users.rows,
-      server_ip: ip.address()
+      server_ip: getServerIp()
     });
 });
 
@@ -37,7 +42,7 @@ app.get('/users/:userId', async (req, res) => {
 
     res.json({
       users: users.rows[0],
-      server_ip: ip.address()
+      server_ip: getServerIp()
     });
 });
 
