@@ -11,6 +11,15 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParse.json());
 
+// Home page
+app.get('/', async (req, res) => {
+  console.log(req);
+  console.log(res);
+  
+  res.json('Hello!');
+});
+
+
 // Show all users
 app.get('/users', async (req, res) => {
     const users = await db.query('SELECT * FROM users');
