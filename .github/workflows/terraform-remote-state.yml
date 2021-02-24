@@ -1,4 +1,4 @@
-name: Terraform Remote State Init
+name: Terraform Remote State
 
 env:
   TF_WORKING_DIRECTORY: ./terraform/remote_state
