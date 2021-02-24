@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const cors = require('cors');
+const fetch  = require('node-fetch');
 const db = require('./db');
 
 const corsOptions = {
