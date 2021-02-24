@@ -29,5 +29,5 @@ Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipeli
 
  - **Destroy backend & frontend deployments:**
  
-   Make commit to **/.github/workflows/terraform-destroy.yml** with commit message "**destroy**" in order destroy **backend** & **frontend** deployments
+   Make commit to **/.github/workflows/terraform-destroy.yml** with commit message "**destroy**" in order destroy **backend** & **frontend** deployments.
 
