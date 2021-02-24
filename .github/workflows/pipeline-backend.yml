@@ -1,4 +1,4 @@
-name: Pipeline CI/CD for Backend
+name: Pipeline CI/CD for Back-End
 
 env:
   NODE_VERSION: 12
