@@ -53,8 +53,8 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     env:
-      TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-      TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}  
+      TF_VAR_DOCKER_IMAGE: ${{ IMAGE_NAME }}:${{ IMAGE_TAG }} 
+      TF_VAR_PORT_CONTAINER: ${{ PORT_CONTAINER }}  
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }}
