@@ -49,6 +49,7 @@ jobs:
         run: npx eslint app/*
         
   terraform-plan:
+    if: github.event_name == 'pull_request'
     name: 'Terraform Plan'
     needs: [test]
     runs-on: ubuntu-latest
