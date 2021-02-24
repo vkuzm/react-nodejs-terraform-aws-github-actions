@@ -25,7 +25,7 @@ Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipeli
  
    On your local machine go to: **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform destroy** in order to destroy a remote state deployment.
    
-   Alternatively: you can remove manually **DynamoDb table** where store deployment locks and **S3 bucket** where store remote deployment state files.
+   Alternatively you can remove manually **DynamoDb table** where store deployment locks and **S3 bucket** where store remote deployment state files.
 
  - **Destroy backend & frontend deployments:**
  
