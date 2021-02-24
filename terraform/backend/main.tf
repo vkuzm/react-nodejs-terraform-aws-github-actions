@@ -1,18 +1,9 @@
-provider "aws" {
-    region = "eu-central-1"
-}
-
-data "aws_availability_zones" "available" {}
-
-data "aws_ami" "latest_amazon_linux" {
-  owners = ["amazon"]
-  most_recent = true
-
-  filter {
-    name = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+terraform {
+  backend "s3" {
   }
 }
+
+provider "aws" {}
 
 resource "aws_security_group" "backend" {
   name = "security-group-backend-apps"
