@@ -114,7 +114,7 @@ jobs:
   build-and-push:
     name: 'Build And Push'
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [test, terraform-plan]
+    needs: [test]
     runs-on: ubuntu-latest
     defaults:
       run:
