@@ -16,10 +16,12 @@ env:
   
 on:
   push:
+    branches: [ main ]
     paths:    
       - 'backend/**'
-      - '.github/workflows/pipeline-backend.yml'
+      #- '.github/workflows/pipeline-backend.yml'
   pull_request:
+    branches: [ main ]
     paths:    
       - 'backend/**'  
 
@@ -49,6 +51,7 @@ jobs:
         run: npx eslint app/*
         
   terraform-plan:
+    if: github.event_name == 'pull_request'
     name: 'Terraform Plan'
     needs: [test]
     runs-on: ubuntu-latest
@@ -58,12 +61,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
-      with:
-        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
 
     - name: Terraform Init
       id: init
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: |
         terraform init \
               -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
@@ -79,7 +82,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color
+      run: terraform plan -no-color -lock=false
       continue-on-error: true
 
     - uses: actions/github-script@0.9.0
@@ -111,7 +114,7 @@ jobs:
   build-and-push:
     name: 'Build And Push'
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [test, terraform-plan]
+    needs: [test]
     runs-on: ubuntu-latest
     defaults:
       run:
