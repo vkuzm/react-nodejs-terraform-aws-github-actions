@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const cors = require('cors');
+const ip = require('ip');
 const db = require('./db');
-const ip = require("ip");
 
 const corsOptions = {
   origin: '*'
@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
 // Show all users
 app.get('/users', async (req, res) => {
     const users = await db.query('SELECT * FROM users');
-    
+
     res.json({
       users: users.rows,
       server_ip: ip.address()
