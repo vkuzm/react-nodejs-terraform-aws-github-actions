@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const cors = require('cors');
-const fetch  = require('node-fetch');
+const fetch = require('node-fetch');
 const db = require('./db');
 
 const corsOptions = {
@@ -31,7 +31,7 @@ app.get('/users', async (req, res) => {
 
     res.json({
       users: users.rows,
-      server_ip: getServerIp()
+      server_ip: await getServerIp()
     });
 });
 
@@ -42,7 +42,7 @@ app.get('/users/:userId', async (req, res) => {
 
     res.json({
       users: users.rows[0],
-      server_ip: getServerIp()
+      server_ip: await getServerIp()
     });
 });
 
