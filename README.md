@@ -4,7 +4,7 @@
 
 **AWS_SECRET_ACCESS_KEY** - "&#x3c;AWS user secret access key&#62;"
 
-**AWS_REGION** - "<AWS Region>"
+**AWS_REGION** - "&#x3c;AWS Region&#62;"
   
 **AWS_STATE_BUCKET_NAME** - "&#x3c;AWS S3 Bucket global unique name where remote state will be stored&#62;" (def: *my-users-app-2021-tfstate*)
 
