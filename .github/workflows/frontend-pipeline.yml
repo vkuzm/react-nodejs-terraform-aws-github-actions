@@ -16,6 +16,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -24,17 +27,14 @@ jobs:
           
       # Install dependencies
       - name: npm install
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npm install
           
       # Run tests
       - name: run tests
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npm run test a -- --watchAll=false --coverage
       
       # Run ESLint
       - name: run eslint
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: npx eslint .
           
           
