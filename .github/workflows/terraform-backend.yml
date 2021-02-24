@@ -1,16 +1,17 @@
-name: Terraform
+name: Terraform Backend
 
 env:
-  WORKING_DIRECTORY: ./terraform
+  WORKING_DIRECTORY: ./terraform/backend
+  IMAGE_TAG: ${{ github.sha }}
   
 on:
   push:
-    paths:    
-      - 'terraform/**'
-      - '.github/workflows/terraform-pipeline.yml'
+    #paths:    
+      #- '.github/workflows/terraform-backend.yml'
   pull_request:
-    paths:    
-      - 'terraform/**'  
+    #paths:    
+      #- 'backend/**'
+      #- 'terraform/backend/**'
 
 jobs:
   terraform:
@@ -45,6 +46,7 @@ jobs:
       if: github.event_name == 'pull_request'
       env:
         PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        IMAGE_TAG: ${{ env.IMAGE_TAG }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -73,5 +75,7 @@ jobs:
       run: exit 1
       
     - name: Terraform Apply
+      env:
+        IMAGE_TAG: ${{ env.IMAGE_TAG }}
       if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       run: terraform apply -auto-approve
