@@ -9,7 +9,7 @@ env:
   PORT_CONTAINER: "8081"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_REGION: "eu-central-1"
   AWS_STATE_BUCKET_NAME: ${{ secrets.AWS_STATE_BUCKET_NAME }}
   AWS_STATE_BUCKET_PATH: ${{ secrets.AWS_STATE_BUCKET_PATH }}
   AWS_STATE_DB_TABLE: ${{ secrets.AWS_STATE_DB_TABLE }}
@@ -61,12 +61,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
-
+    
     - name: Terraform Init
       id: init
-      env:
-        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: |
         terraform init \
               -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
@@ -76,9 +73,9 @@ jobs:
               -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
               -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check
+    #- name: Terraform Format
+    #  id: fmt
+    #  run: terraform fmt -check
 
     - name: Terraform Validate
       id: validate
@@ -86,6 +83,9 @@ jobs:
 
     - name: Terraform Plan
       id: plan
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: terraform plan -no-color -lock=false
       continue-on-error: true
 
@@ -141,14 +141,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
-      with:
-        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
-
-    - name: Terraform fmt
-      id: fmt
-      run: terraform fmt -check
-      continue-on-error: true
 
     - name: Terraform Init
       id: init
@@ -160,11 +152,10 @@ jobs:
               -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_TABLE }}" \
               -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
               -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
-      
-    - name: Terraform Plan Status
-      if: steps.plan.outcome == 'failure'
-      run: exit 1
 
     - name: Terraform Apply
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: terraform apply -auto-approve
       
