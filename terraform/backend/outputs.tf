@@ -5,3 +5,11 @@ output "loadbalancer_url" {
 output "database_url" {
     value = aws_db_instance.backend.address
 }
+
+output "docker_image" {
+    value = var.DOCKER_IMAGE
+}
+
+output "port_container" {
+    value = var.PORT_CONTAINER
+}
