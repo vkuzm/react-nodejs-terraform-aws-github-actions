@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParse = require('body-parser');
 const cors = require('cors');
 const db = require('./db');
+const ip = require("ip");
 
 const corsOptions = {
   origin: '*'
@@ -19,18 +20,25 @@ app.get('/', async (req, res) => {
   res.json('Hello World!!!');
 });
 
-
 // Show all users
 app.get('/users', async (req, res) => {
     const users = await db.query('SELECT * FROM users');
-    res.json(users.rows);
+    
+    res.json({
+      users: users.rows,
+      server_ip: ip.address()
+    });
 });
 
 // Show a single user
 app.get('/users/:userId', async (req, res) => {
     const userId = req.params['userId'];
     const users = await db.query('SELECT * FROM users WHERE user_id = $1', [userId]);
-    res.json(users.rows[0]);
+
+    res.json({
+      users: users.rows[0],
+      server_ip: ip.address()
+    });
 });
 
 // Add a new user
