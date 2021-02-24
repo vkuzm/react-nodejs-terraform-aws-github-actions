@@ -7,15 +7,12 @@ env:
   IMAGE_NAME: "mindzoom/users-app"
   IMAGE_TAG: ${{ github.sha }}
   PORT_CONTAINER: "8081"
-  
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: "eu-central-1"
   AWS_STATE_BUCKET_NAME: "my-users-app-2021-tfstate"
   AWS_STATE_BUCKET_PATH: "apps/backend/app.state"
   AWS_STATE_DB_TABLE: "apps-backend-tfstatelock"
-  TF_VAR_DOCKER_IMAGE: ${{ IMAGE_NAME }}:${{ IMAGE_TAG }} 
-  TF_VAR_PORT_CONTAINER: ${{ PORT_CONTAINER }}  
   
 on:
   push:
@@ -55,6 +52,9 @@ jobs:
     name: 'Terraform Plan'
     needs: [test]
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+      TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}  
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }}
@@ -132,6 +132,9 @@ jobs:
     name: 'Terraform Deploy'
     needs: [build-and-push]
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+      TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}  
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }} 
