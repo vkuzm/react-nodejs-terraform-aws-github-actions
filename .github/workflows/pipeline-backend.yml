@@ -4,7 +4,7 @@ env:
   NODE_VERSION: 12
   WORKING_DIRECTORY: ./backend
   TF_WORKING_DIRECTORY: ./terraform/backend
-  IMAGE_NAME: 'mindzoom/users-app'
+  IMAGE_NAME: "mindzoom/users-app"
   IMAGE_TAG: ${{ github.sha }}
   PORT_CONTAINER: "8081"
   
@@ -54,11 +54,11 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ AWS_REGION }}
-      TF_VAR_DOCKER_IMAGE: ${{ IMAGE_NAME }}:${{ IMAGE_TAG }} 
-      TF_VAR_PORT_CONTAINER: ${{ PORT_CONTAINER }}  
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ env.AWS_REGION }}
+      TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+      TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}  
     defaults:
       run:
         working-directory: ${{ env.TF_WORKING_DIRECTORY }}
