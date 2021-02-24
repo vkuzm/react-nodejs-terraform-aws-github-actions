@@ -14,7 +14,7 @@ app.use(bodyParse.json());
 
 const getServerIp = async () => {
   const data = await fetch('http://169.254.169.254/latest/meta-data/public-ipv4');
-  return await data.json();
+  return await data.text();
 };
 
 // Home page
