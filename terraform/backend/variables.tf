@@ -5,8 +5,10 @@ variable "instance_type" {
 
 variable "PORT_CONTAINER" {
   description = "Port contaner"
+  default = ""
 }
 
 variable "DOCKER_IMAGE" {
   description = "Docker image"
+  default = ""
 }
