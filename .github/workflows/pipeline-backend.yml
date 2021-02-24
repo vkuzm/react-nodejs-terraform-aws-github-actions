@@ -61,12 +61,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
-
+    
     - name: Terraform Init
       id: init
-      env:
-        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: |
         terraform init \
               -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
@@ -86,6 +83,9 @@ jobs:
 
     - name: Terraform Plan
       id: plan
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: terraform plan -no-color -lock=false
       continue-on-error: true
 
@@ -141,9 +141,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1
-      with:
-        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
-        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
 
     - name: Terraform fmt
       id: fmt
@@ -166,5 +163,8 @@ jobs:
       run: exit 1
 
     - name: Terraform Apply
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: terraform apply -auto-approve
       
