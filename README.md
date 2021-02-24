@@ -20,5 +20,5 @@ Make commit to **/.github/workflows/terraform-remote-state.yml** with commit mes
 Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipelines.
 
 
-## #4 Destroy everything & clean up
+### #4 Destroy everything & clean up
 Make commit to **/.github/workflows/terraform-remote-state.yml** with commit message "**destroy**" in order to **destroy backend remote state depoyment** as well as **backend & frontend** deployments.
