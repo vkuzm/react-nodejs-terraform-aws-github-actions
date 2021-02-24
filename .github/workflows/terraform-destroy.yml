@@ -27,26 +27,33 @@ jobs:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
       
-    - name: Terraform Init
-      id: init
-      run: terraform init
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init \
+                -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
+                -backend-config="key=${{ env.AWS_STATE_BUCKET_PATH }}" \
+                -backend-config="region=${{ env.AWS_REGION }}" \
+                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_TABLE }}" \
+                -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
+                -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
 
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color
-      continue-on-error: true
-      
-    - name: Terraform Plan Status
-      if: steps.plan.outcome == 'failure'
-      run: exit 1
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
 
-     - name: Terraform Destroy
-       id: destroy
-       run: terraform destroy -auto-approve
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy -auto-approve
        
        
   terraform destroy frontend:
@@ -60,23 +67,30 @@ jobs:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
       
-    - name: Terraform Init
-      id: init
-      run: terraform init
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init \
+                -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
+                -backend-config="key=${{ env.AWS_STATE_BUCKET_PATH }}" \
+                -backend-config="region=${{ env.AWS_REGION }}" \
+                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_TABLE }}" \
+                -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
+                -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 
-    - name: Terraform Validate
-      id: validate
-      run: terraform validate -no-color
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
 
-    - name: Terraform Plan
-      id: plan
-      run: terraform plan -no-color
-      continue-on-error: true
-      
-    - name: Terraform Plan Status
-      if: steps.plan.outcome == 'failure'
-      run: exit 1
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
 
-     - name: Terraform Destroy
-       id: destroy
-       run: terraform destroy -auto-approve
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy -auto-approve
