@@ -153,6 +153,14 @@ jobs:
               -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
               -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 
+    - name: Terraform Plan
+      id: plan
+      env:
+        TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
+        TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
+      run: terraform plan -no-color
+      continue-on-error: true
+
     - name: Terraform Apply
       env:
         TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
