@@ -47,6 +47,7 @@ resource "aws_elb" "backend" {
         data.aws_availability_zones.available.names[0], 
         data.aws_availability_zones.available.names[1]
     ]
+    subnets         = data.aws_subnet_ids.all.ids
     security_groups = [aws_security_group.backend.id]
     instances       = aws_instance.backend.*.id
 
@@ -81,10 +82,12 @@ resource "aws_default_subnet" "default_az2" {
 resource "aws_instance" "backend" {
     count = 1
 
-    ami                    = data.aws_ami.latest_amazon_linux.id
-    instance_type          = var.instance_type
-    vpc_security_group_ids = [aws_security_group.backend.id]
-    user_data              = templatefile("deployment.sh.tpl", {
+    ami                         = data.aws_ami.latest_amazon_linux.id
+    instance_type               = var.instance_type
+    vpc_security_group_ids      = [aws_security_group.backend.id]
+    availability_zone           = data.aws_availability_zones.available.names[0]
+    associate_public_ip_address = true
+    user_data                   = templatefile("deployment.sh.tpl", {
       PORT_EXTERNAL  = "80"
       PORT_CONTAINER = var.PORT_CONTAINER
       DOCKER_IMAGE = var.DOCKER_IMAGE
