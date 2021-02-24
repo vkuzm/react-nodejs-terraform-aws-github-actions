@@ -5,7 +5,7 @@ env:
   TF_FRONTEND_WORKING_DIRECTORY: ./terraform/frontend
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_REGION: "eu-central-1"
   AWS_STATE_BUCKET_NAME: ${{ secrets.AWS_STATE_BUCKET_NAME }}
   AWS_STATE_BUCKET_PATH: ${{ secrets.AWS_STATE_BUCKET_PATH }}
   AWS_STATE_DB_TABLE: ${{ secrets.AWS_STATE_DB_TABLE }}
