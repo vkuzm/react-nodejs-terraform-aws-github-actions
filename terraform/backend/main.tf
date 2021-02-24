@@ -47,7 +47,6 @@ resource "aws_elb" "backend" {
         data.aws_availability_zones.available.names[0], 
         data.aws_availability_zones.available.names[1]
     ]
-    subnets         = data.aws_subnet_ids.all.ids
     security_groups = [aws_security_group.backend.id]
     instances       = aws_instance.backend.*.id
 
