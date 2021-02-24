@@ -13,7 +13,8 @@
  -  **REGISTRY_PASSWORD** - &#x3c;container registry user password&#62;
 
 ### #2 Set up & deploy remote state backend
-Make commit to **/.github/workflows/terraform-remote-state.yml** with commit message "**init**" in order to deploy backend for remote state.
+Clone the repository to a local machine.
+Go to **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform apply** in order to deploy a remote state backend.
 
 
 ### #3 Run CI/CD pipelines
@@ -21,4 +22,12 @@ Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipeli
 
 
 ### #4 Destroy everything & clean up
-Make commit to **/.github/workflows/terraform-remote-state.yml** with commit message "**destroy**" in order to **destroy backend remote state depoyment** as well as **backend & frontend** deployments.
+
+ - **Destroy a remote state:**
+ 
+   On your local machine go to: **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform destroy** in order to destroy a remote state backend.
+
+ - **Destroy backend & frontend deployments:**
+ 
+   Make commit to **/.github/workflows/terraform-destroy.yml** with commit message "**destroy**" in order destroy **backend** & **frontend** deployments
+
