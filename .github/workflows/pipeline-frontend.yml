@@ -19,7 +19,7 @@ on:
     branches: [ main ]
     paths:    
       - 'frontend/**'
-      - '.github/workflows/pipeline-frontend.yml'
+      #- '.github/workflows/pipeline-frontend.yml'
   pull_request:
     branches: [ main ]
     paths:    

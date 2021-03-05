@@ -57,7 +57,7 @@ function App() {
 }
 
 const onDeleteUserButton = (userId) => {
-  console.log(userId)
+  console.log(userId);
 }
 
 export default App;
