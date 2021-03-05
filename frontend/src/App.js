@@ -5,7 +5,7 @@ function App() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8081/users/')
+    fetch(`http://${process.env.API_URL}/users/`)
       .then((res => res.json()))
       .then((users => {
         console.log('got users from backend', users);
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">Users list</header>
+      <header className="header">Users list - ({users.server_ip ? users.server_ip : "0"})</header>
 
       <table>
         <thead>
