@@ -4,15 +4,15 @@ env:
   NODE_VERSION: 12
   WORKING_DIRECTORY: ./backend
   TF_WORKING_DIRECTORY: ./terraform/backend
-  IMAGE_NAME: "mindzoom/users-app"
+  IMAGE_NAME: "mindzoom/backend-app"
   IMAGE_TAG: ${{ github.sha }}
   PORT_CONTAINER: "8081"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: "eu-central-1"
-  AWS_STATE_BUCKET_NAME: ${{ secrets.AWS_STATE_BUCKET_NAME }}
-  AWS_STATE_BUCKET_PATH: ${{ secrets.AWS_STATE_BUCKET_PATH }}
-  AWS_STATE_DB_TABLE: ${{ secrets.AWS_STATE_DB_TABLE }}
+  AWS_STATE_BUCKET_NAME: "my-users-app-2021-tfstate"
+  AWS_STATE_BUCKET_PATH: "apps/backend/app.state"
+  AWS_STATE_DB_TABLE: "apps-backend-tfstatelock"
   
 on:
   push:

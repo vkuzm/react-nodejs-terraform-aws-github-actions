@@ -6,9 +6,11 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: "eu-central-1"
-  AWS_STATE_BUCKET_NAME: ${{ secrets.AWS_STATE_BUCKET_NAME }}
-  AWS_STATE_BUCKET_PATH: ${{ secrets.AWS_STATE_BUCKET_PATH }}
-  AWS_STATE_DB_TABLE: ${{ secrets.AWS_STATE_DB_TABLE }}
+  AWS_STATE_BUCKET_NAME: "my-users-app-2021-tfstate"
+  AWS_STATE_BUCKET_FRONTEND_PATH: "apps/frontend/app.state"
+  AWS_STATE_BUCKET_BACKEND_PATH: "apps/backend/app.state"
+  AWS_STATE_DB_FRONTEND_TABLE: "apps-frontend-tfstatelock"
+  AWS_STATE_DB_BACKEND_TABLE: "apps-backend-tfstatelock"
   
 on:
   push:
@@ -32,9 +34,9 @@ jobs:
         run: |
           terraform init \
                 -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
-                -backend-config="key=${{ env.AWS_STATE_BUCKET_PATH }}" \
+                -backend-config="key=${{ env.AWS_STATE_BUCKET_BACKEND_PATH }}" \
                 -backend-config="region=${{ env.AWS_REGION }}" \
-                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_TABLE }}" \
+                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_BACKEND_TABLE }}" \
                 -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
                 -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 
@@ -72,9 +74,9 @@ jobs:
         run: |
           terraform init \
                 -backend-config="bucket=${{ env.AWS_STATE_BUCKET_NAME }}" \
-                -backend-config="key=${{ env.AWS_STATE_BUCKET_PATH }}" \
+                -backend-config="key=${{ env.AWS_STATE_BUCKET_FRONTEND_PATH }}" \
                 -backend-config="region=${{ env.AWS_REGION }}" \
-                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_TABLE }}" \
+                -backend-config="dynamodb_table=${{ env.AWS_STATE_DB_FRONTEND_TABLE }}" \
                 -backend-config="access_key=${{ env.AWS_ACCESS_KEY_ID }}" \
                 -backend-config="secret_key=${{ env.AWS_SECRET_ACCESS_KEY }}"
 

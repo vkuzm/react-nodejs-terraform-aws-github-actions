@@ -2,8 +2,12 @@ variable "bucket_name" {
   default = "my-users-app-2021-tfstate"
 }
 
-variable "db_table" {
+variable "db_table_backend" {
   default = "apps-backend-tfstatelock"
+}
+
+variable "db_table_frontend" {
+  default = "apps-frontend-tfstatelock"
 }
 
 variable "user_name" {
@@ -53,8 +57,20 @@ resource "aws_s3_bucket_public_access_block" "tfremotestate" {
   restrict_public_buckets = true
 }
 
-resource "aws_dynamodb_table" "tf_db_statelock" {
-  name           = var.db_table
+resource "aws_dynamodb_table" "tf_db_backend_statelock" {
+  name           = var.db_table_backend
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "LockID"
+
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+}
+
+resource "aws_dynamodb_table" "tf_db_frontend_statelock" {
+  name           = var.db_table_frontend
   read_capacity  = 20
   write_capacity = 20
   hash_key       = "LockID"
@@ -76,7 +92,8 @@ resource "aws_iam_user_policy" "terraform_user_dbtable" {
             "Effect": "Allow",
             "Action": ["dynamodb:*"],
             "Resource": [
-                "${aws_dynamodb_table.tf_db_statelock.arn}"
+                "${aws_dynamodb_table.tf_db_backend_statelock.arn}",
+                "${aws_dynamodb_table.tf_db_frontend_statelock.arn}"
             ]
         }
    ]
