@@ -2,21 +2,21 @@ import "./App.css";
 import React, { useState, useEffect } from 'react';
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
     fetch(`http://${process.env.REACT_APP_API_URL}/users/`)
       .then((res => res.json()))
-      .then((users => {
-        console.log('users from backend', users);
-        setUsers(users);
+      .then((results => {
+        console.log('results from backend', results);
+        setResults(results);
       }))
       .catch(console.log);
   }, []);
 
   return (
     <div className="App">
-      <header className="header">Users list - ({users.server_ip ? users.server_ip : "-"})</header>
+      <header className="header">Users list - ({results.server_ip ? results.server_ip : "-"})</header>
 
       <table>
         <thead>
@@ -30,8 +30,8 @@ function App() {
         </thead>
         <tbody>
           {
-            users && users.length ?
-              users.map((user, index) => (
+            results.users && results.users.length ?
+            results.users.map((user, index) => (
                 <tr key={index}>
                   <td>{user.user_id}</td>
                   <td>{user.firstname}</td>
