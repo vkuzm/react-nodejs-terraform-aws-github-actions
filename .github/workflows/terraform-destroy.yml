@@ -1,4 +1,4 @@
-name: Terraform destroy & clean up!
+name: Terraform destroy & clean up
 
 env:
   TF_BACKEND_WORKING_DIRECTORY: ./terraform/backend
