@@ -4,14 +4,22 @@
 
  - AWS_ACCESS_KEY_ID - &#x3c;AWS user API key&#62;    
  - AWS_SECRET_ACCESS_KEY - &#x3c;AWS user secret access key&#62;     
- - AWS_STATE_BUCKET_NAME - &#x3c;AWS S3 Bucket global unique name where remote state will be stored&#62; (def: *my-users-app-2021-tfstate*)    
- - AWS_STATE_BUCKET_PATH - &#x3c;AWS S3 Bucket path to remote state file&#62; (def: *apps/backend/app.state*)    
- - AWS_STATE_DB_TABLE - &#x3c;AWS DynamoDB table name for a remote state&#62; (def: *apps-backend-tfstatelock*)    
+ - AWS_STATE_BUCKET_NAME - &#x3c;AWS S3 Bucket global unique name where remote state will be stored&#62; (e.g.: *my-users-app-2021-tfstate*)    
+ - AWS_STATE_BUCKET_PATH - &#x3c;AWS S3 Bucket path to remote state file&#62; (e.g.: *apps/backend/app.state*)    
+ - AWS_STATE_DB_TABLE - &#x3c;AWS DynamoDB table name for a remote state&#62; (e.g.: *apps-backend-tfstatelock*)    
  - REGISTRY_USERNAME - &#x3c;container registry username&#62;    
  - REGISTRY_PASSWORD - &#x3c;container registry user password&#62;
 
 ### #2 Set up & deploy remote state backend
 Clone the repository to a local machine.
+
+Export env variables:
+```
+export AWS_REGION="<aws region>"
+export AWS_ACCESS_KEY_ID="<aws acesss key>"
+export AWS_SECRET_ACCESS_KEY="<aws secret access key>"
+```
+
 Go to **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform apply** in order to deploy a remote state backend.
 
 
@@ -24,6 +32,8 @@ Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipeli
  - **Destroy a remote state:**
  
    On your local machine go to: **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform destroy** in order to destroy a remote state deployment.
+   
+   Alternatively you can remove manually **DynamoDb table** where is stored deployment locks and **S3 bucket** where is stored remote deployment state files.
 
  - **Destroy backend & frontend deployments:**
  
