@@ -19,7 +19,7 @@ on:
     branches: [ main ]
     paths:    
       - 'frontend/**'
-      #- '.github/workflows/pipeline-frontend.yml'
+      - '.github/workflows/pipeline-frontend.yml'
   pull_request:
     branches: [ main ]
     paths:    
@@ -131,7 +131,7 @@ jobs:
           
       - name: Docker Build & Push to container registry
         run: |
-          API_URL = aws elb describe-load-balancers --load-balancer-names 'backend-app-elb' --query 'LoadBalancerDescriptions[*].DNSName' --output text
+          API_URL = "test"
           echo $API_URL
           docker build . --build-arg API_URL=$API_URL -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
