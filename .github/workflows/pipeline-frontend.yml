@@ -6,7 +6,7 @@ env:
   TF_WORKING_DIRECTORY: ./terraform/frontend
   IMAGE_NAME: "mindzoom/frontend-app"
   IMAGE_TAG: ${{ github.sha }}
-  PORT_CONTAINER: "3000"
+  PORT_CONTAINER: "80"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: "eu-central-1"
