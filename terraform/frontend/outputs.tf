@@ -1,4 +1,4 @@
-output "server public dns" {
+output "server_public_dns" {
     value = aws_instance.frontend.public_dns
 }
 
