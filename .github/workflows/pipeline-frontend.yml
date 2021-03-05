@@ -120,15 +120,19 @@ jobs:
       run:
         working-directory: ${{ env.WORKING_DIRECTORY }}
     steps:
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color -lock=false
-        continue-on-error: true
-
       - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          
       - name: Docker Build & Push to container registry
         run: |
-          docker build . --build-arg API_URL="${{ steps.plan.outputs.server_public_dns }}" -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          API_URL = aws elb describe-load-balancers --load-balancer-names 'backend-app-elb' --query 'LoadBalancerDescriptions[*].DNSName' --output text
+          docker build . --build-arg API_URL="$API_URL" -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
           docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
           
@@ -167,4 +171,3 @@ jobs:
         TF_VAR_DOCKER_IMAGE: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
         TF_VAR_PORT_CONTAINER: ${{ env.PORT_CONTAINER }}
       run: terraform apply -auto-approve
-      

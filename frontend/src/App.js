@@ -8,7 +8,7 @@ function App() {
     fetch(`http://${process.env.REACT_APP_API_URL}/users/`)
       .then((res => res.json()))
       .then((users => {
-        console.log('got users from backend', users);
+        console.log('users from backend', users);
         setUsers(users);
       }))
       .catch(console.log);
