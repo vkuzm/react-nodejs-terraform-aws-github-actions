@@ -29,10 +29,11 @@ Make commit to **/backend** or **/frontend folder** in order to run CI/CD pipeli
  - **Destroy backend & frontend deployments:**
  
    Make commit to **/.github/workflows/terraform-destroy.yml** with commit message "**destroy**" in order destroy **backend** & **frontend** deployments.
+   
 
  - **Destroy a remote state:**
  
    On your local machine go to: **&#x3c;project repository&#62;/terraform/remote_state/** and run a command: **terraform destroy** in order to destroy a remote state deployment.
-   
+
    Alternatively you can remove manually **DynamoDb table** where is stored deployment locks and **S3 bucket** where is stored remote deployment state files.
 
