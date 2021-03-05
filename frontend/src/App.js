@@ -16,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">Users list - ({users.server_ip ? users.server_ip : "0"})</header>
+      <header className="header">Users list - ({users.server_ip ? users.server_ip : "-"})</header>
 
       <table>
         <thead>
