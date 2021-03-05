@@ -5,7 +5,7 @@ function App() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch(`http://${process.env.API_URL}/users/`)
+    fetch(`http://${process.env.REACT_APP_API_URL}/users/`)
       .then((res => res.json()))
       .then((users => {
         console.log('got users from backend', users);

@@ -44,7 +44,6 @@ resource "aws_instance" "frontend" {
       PORT_EXTERNAL  = "80"
       PORT_CONTAINER = var.PORT_CONTAINER
       DOCKER_IMAGE   = var.DOCKER_IMAGE
-      API_URL        = data.aws_elb.backend-app-elb.dns_name
     })
 
     tags = {

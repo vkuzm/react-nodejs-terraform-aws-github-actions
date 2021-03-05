@@ -120,10 +120,15 @@ jobs:
       run:
         working-directory: ${{ env.WORKING_DIRECTORY }}
     steps:
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -lock=false
+        continue-on-error: true
+
       - uses: actions/checkout@v2
       - name: Docker Build & Push to container registry
         run: |
-          docker build . -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          docker build . --build-arg API_URL="${{ steps.plan.outputs.server_public_dns }}" -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} 
           docker push ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} 
           

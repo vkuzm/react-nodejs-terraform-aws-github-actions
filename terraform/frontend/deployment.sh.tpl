@@ -6,5 +6,4 @@ sudo usermod -a -G docker ec2-user
 sudo service docker start
 
 docker run -d --restart=on-failure:10 -p ${PORT_EXTERNAL}:${PORT_CONTAINER} \
--e API_URL=${API_URL} \
 ${DOCKER_IMAGE}
